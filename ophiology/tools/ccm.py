@@ -1,27 +1,15 @@
 import json
-# from pprint import pprint
-import os, fnmatch
-# import xml.etree.ElementTree as ET
+import os
 # import xml.dom.minidom
+# import xml.etree.ElementTree as ET
+
+# from pprint import pprint
 
 import envoy
 
-def recursive_path_split(path):
-    """ taken from stack overflow
-    http://stackoverflow.com/questions/13505819/python-split-path-recursively
-    """
-    rest, tail = os.path.split(path)
-    if rest == '':
-        return tail,
-    return recursive_path_split(rest) + (tail,)
+from ophiology.util.file import recursive_path_split
+from ophiology.util.log import LOGGING
 
-def find_files(directory, pattern):
-    for root, dirs, files in os.walk(directory):
-        for basename in files:
-            if fnmatch.fnmatch(basename, pattern):
-                # filename = os.path.join(root, basename)
-                filename = os.path.relpath(os.path.join(root, basename), directory)
-                yield filename
 
 def build_function_metric(metrics, filename, metric_data):
     """TODO: Docstring"""
@@ -47,8 +35,9 @@ def build_function_metric(metrics, filename, metric_data):
         startLineNumber=metric_data['lineno'],
         endLineNumber=metric_data['endline'],
         )
-    print xml
+    LOGGING.debug('Metric Generated: \n{}', xml)
     metrics.append(xml)
+
 
 def build_method_metric(metrics, filename, metric_data):
     """TODO: Docstring"""
@@ -74,9 +63,9 @@ def build_method_metric(metrics, filename, metric_data):
         startLineNumber=metric_data['lineno'],
         endLineNumber=metric_data['endline'],
         )
-    # print xml
+    LOGGING.debug('Metric Generated: \n{}', xml)
     metrics.append(xml)
-    # pass
+
 
 def build_class_metric(metrics, filename, metric_data):
     """TODO: Docstring"""
@@ -102,7 +91,7 @@ def build_class_metric(metrics, filename, metric_data):
         startLineNumber=metric_data['lineno'],
         endLineNumber=metric_data['endline'],
         )
-    # print xml
+    LOGGING.debug('Metric Generated: \n{}', xml)
     metrics.append(xml)
 
     if metric_data['methods']:
@@ -115,6 +104,7 @@ def build_class_metric(metrics, filename, metric_data):
                 )
 
     # pass
+
 
 def build_classmethod_metric(metrics, filename, metric_data, classname):
     """TODO: Docstring"""
@@ -138,9 +128,8 @@ def build_classmethod_metric(metrics, filename, metric_data, classname):
         startLineNumber=metric_data['lineno'],
         endLineNumber=metric_data['endline'],
         )
-    print xml
+    LOGGING.debug('Metric Generated: \n{}', xml)
     metrics.append(xml)
-    # pass
 
 
 def build_metric_xml(**kwds):
@@ -168,9 +157,12 @@ def build_metric_xml(**kwds):
 def execute():
     # command = 'radon cc -s --json %s' % 'os.getcwd()'
     command = 'radon cc -s --json %s' % '.'
+    LOGGING.debug('Running command: {}', command)
     cmd = envoy.run(command)
-    # print cmd.std_out
+    LOGGING.debug('Command result: {}', cmd)
+
     json_data = cmd.std_out
+    LOGGING.debug('Command response: {}', json_data)
         # for n in iter(cmd.std_out.splitlines()):
         #     metrics.append(n)
 

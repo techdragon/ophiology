@@ -1,10 +1,14 @@
-# from __future__ import print_function
+# from __future__ import print_functionx`
 import os
 import re
+
 from tempfile import NamedTemporaryFile
-from ophiology.util.file import find_absolute_filenames
 
 import envoy
+
+from ophiology.util.file import find_absolute_filenames
+from ophiology.util.log import LOGGING
+
 
 EXCLUDES = (
     re.compile(r'''/migrations/[0-9]{4,}'''),
@@ -33,12 +37,10 @@ def execute():
     # IGNORE_DIRS = set()
 
     tempfile = NamedTemporaryFile()
-    print tempfile
-    print tempfile.name
-    print (
-        'Using tempfile "%s" for storage of the' % tempfile.name +
-        ' files to be checked for duplicate code'
-    )
+    LOGGING.debug(tempfile)
+    LOGGING.debug(tempfile.name)
+    LOGGING.info('Python source code files to be checked for duplicate code' +
+        ' are stored in tempfile {}', tempfile.name)
 
     files = [_file for _file in find_absolute_filenames(os.getcwd(), '*.py')
          if not excluded(_file)]
