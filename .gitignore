@@ -41,3 +41,11 @@ output/*/index.html
 
 # Sphinx
 docs/_build
+
+# Project outputs that may be generated during development or test runs
+coverage.xml
+coverage*.xml
+ccm.xml
+ccm*.xml
+checkstyle.xml
+checkstyle*.xml

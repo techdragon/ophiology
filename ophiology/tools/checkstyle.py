@@ -12,6 +12,7 @@ import click
 
 from ophiology.util.file import find_relative_filenames
 from ophiology.util.log import LOGGING
+from ophiology.util.misc import message_level_from_code
 
 # def find_files(directory, pattern):
 #     for root, dirs, files in os.walk(directory):
@@ -96,11 +97,13 @@ def execute():
                 ERROR = ET.SubElement(FILE, 'error', {
                     'line': str(message['location']['line']),
                     'column': str(message['location']['character']),
-                    'message': message['message'],
-                    'severity':'',
+                    'message': message['code'],
+
+                    'severity': message_level_from_code(message['code']),
                     'source': (str(message['location']['module']) + '::' +
                                str(message['location']['function']))
                 })
+                ERROR.text(message['message'])
         # click.echo(pformat(messages))
 
     OUTPUT = ET.tostring(CHECKSTYLE)

@@ -7,7 +7,7 @@ from ophiology.util.log import CONSOLE
 from ophiology.tools import ccm as ccm_tool
 from ophiology.tools import checkstyle as checkstyle_tool
 from ophiology.tools import clonedigger as clonedigger_tool
-
+from ophiology.util.django import django_apps
 
 @click.group()
 @click.version_option()
@@ -51,8 +51,11 @@ def checkstyle():
 
 
 @cli.command()
-def dropdb():
-    click.echo('Dropped the database')
+@click.argument('path')
+def django(path):
+    click.echo('Under development')
+    django_apps(path)
+
 
 
 if __name__ == '__main__':
