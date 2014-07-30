@@ -9,6 +9,7 @@ from ophiology.tools import checkstyle as checkstyle_tool
 from ophiology.tools import clonedigger as clonedigger_tool
 from ophiology.util.django import django_apps
 
+
 @click.group()
 @click.version_option()
 @click.option('--debug', is_flag=True, default=False,

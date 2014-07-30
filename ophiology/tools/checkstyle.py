@@ -97,6 +97,7 @@ def execute():
                 ERROR = ET.SubElement(FILE, 'error', {
                     'line': str(message['location']['line']),
                     'column': str(message['location']['character']),
+<<<<<<< HEAD
                     'message': message['code'],
 
                     'severity': message_level_from_code(message['code']),
@@ -104,6 +105,13 @@ def execute():
                                str(message['location']['function']))
                 })
                 ERROR.text(message['message'])
+=======
+                    'message': message['message'],
+                    'severity':'',
+                    'source': (str(message['location']['module']) + '::' +
+                               str(message['location']['function']))
+                })
+>>>>>>> 5b0be70f9ce3d2cdb1fee44c518f1372f39a3084
         # click.echo(pformat(messages))
 
     OUTPUT = ET.tostring(CHECKSTYLE)
