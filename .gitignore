@@ -43,6 +43,7 @@ output/*/index.html
 docs/_build
 
 # Project outputs that may be generated during development or test runs
+tmp
 coverage.xml
 coverage*.xml
 ccm.xml
